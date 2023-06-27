@@ -21,7 +21,7 @@ app.add_middleware(
 
 @app.get("/image")
 async def image(images: UploadFile):
-    return yolo_b64.predict(images)
+    return yolo_b64.predict(await images.read())
 
 
 

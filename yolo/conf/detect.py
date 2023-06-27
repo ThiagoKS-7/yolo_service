@@ -32,7 +32,7 @@ print("classes loaded")
 
 class YOLO_img_to_base64_response(object):
     def predict(image):
-        img_raw = tf.image.decode_image(image.read(), channels=3)
+        img_raw = tf.image.decode_image(image, channels=3)
         img = tf.expand_dims(img_raw, 0)
         img = transform_images(img, img_size)
 
@@ -52,8 +52,6 @@ class YOLO_img_to_base64_response(object):
             )
         img = cv2.cvtColor(img_raw.numpy(), cv2.COLOR_RGB2BGR)
         img = draw_outputs(img, (boxes, scores, classes, nums), class_names)
-        # cv2.imwrite(output_path + "detection.jpg", img)
-        # print("output saved to: {}".format(output_path + "detection.jpg"))
 
         _, img_encoded = cv2.imencode(".png", img)
         response = img_encoded.tostring()
